@@ -32,6 +32,7 @@ router.post('/google-login', authController.googleLogin);
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);
+router.post('/update-address/new', authController.updateUserAddress);
 
 module.exports = router;
 

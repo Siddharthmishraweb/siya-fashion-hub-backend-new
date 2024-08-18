@@ -66,7 +66,7 @@
 
 
 
-const { loginWithGoogle, signUp, loginService } = require('../services/authService');
+const { loginWithGoogle, signUp, loginService, updateAddress } = require('../services/authService');
 
 const googleAuth = (req, res, next) => {
   passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
@@ -115,6 +115,17 @@ const login = async (req, res) => {
   }
 };
 
+const updateUserAddress = async (req, res) => {
+  try {
+    console.log("req.body", req.body)
+    const { user_id, email, name, lastName, phoneNumber, address, zipCode, city, state, isMain } = req.body;
+    const updatedAddress = await updateAddress({ user_id, email, name, lastName, phoneNumber, address, zipCode, city, state, isMain });
+    res.json({ updatedAddress });
+  } catch (error) {
+    res.status(401).json({ error: error.message });
+  }
+};
+
 module.exports = {
   googleAuth,
   googleAuthCallback,
@@ -122,4 +133,5 @@ module.exports = {
   googleLogin,
   register,
   login,
+  updateUserAddress
 };
